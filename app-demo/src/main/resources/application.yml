@@ -1,0 +1,50 @@
+server:
+  port: 8089
+
+spring:
+  datasource:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: root
+#          url: jdbc:mysql://localhost:3307/common?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+          url: jdbc:mysql://localhost:3307/flowable-test?useSSL=false&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+
+          thymeleaf:
+                prefix: classpath:/templates/
+                suffix: .html
+                mode: HTML5
+                encoding: UTF-8
+                servlet:
+                   content-type: text/html
+  resources:
+    static-locations:  classpath:/templates/
+# 日志方式一
+logging:
+  level:
+    com.app.mapper: debug
+# 日志方式二
+mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+## mapper和xml文件的包名相同可以不配置   mapper-locations
+## 必须以*Mapper.xml不能以*.xml否则报错 /**表示多级目录
+   mapper-locations: classpath*:/com/**/*Mapper.xml
+   type-aliases-package: com.app.*.entity
+#  security:
+#    user:
+#      name: "admin"
+#      password: "admin"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "bus-refresh"
+
+# Redis数据库索引（默认为0）
+  redis:
+      database: 2
+  # Redis服务器地址
+      host: localhost
+  # Redis服务器连接端口
+      port: 6379
+  # Redis服务器连接密码（默认为空）
